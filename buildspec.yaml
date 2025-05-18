@@ -6,7 +6,7 @@ env:
     IMAGE_REPO_NAME: "todo-app"
     ECS_CLUSTER: "devops_cluster"
     SERVICE_NAME: "todo-service"
-    TASK_DEF_FAMILY: "todoapptask"
+    TASK_DEF_FAMILY: "todo-app"
 
 phases:
   pre_build:
@@ -43,7 +43,7 @@ phases:
       - echo "Contents of task-definition-temp.json:"
       - cat task-definition-temp.json
       - echo Registering ECS Task Definition...
-      - aws ecs register-task-definition --cli-input-json file://task-definition.json
+      - aws ecs register-task-definition --cli-input-json file://task-definition-temp.json
 
       - echo Updating ECS Service with new task definition...
       - NEW_TASK_DEF_ARN=$(aws ecs list-task-definitions --sort DESC --region $AWS_REGION --query "taskDefinitionArns[0]" --output text)
